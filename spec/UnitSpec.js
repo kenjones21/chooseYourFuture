@@ -27,4 +27,17 @@ describe("EmissionsUtility", function() {
   it("should translate thresholds", function() {
     expect(emUtil.thresholdsTranslate(1, 3, [4], years)).toEqual([1])
   })
+
+  it("should find index of array given emissions", function() {
+    expect(emUtil.find(years, 2.1)).toEqual(2)
+    expect(emUtil.find(years, 2)).toEqual(1)
+  });
+
+  it("should return -1 if emissions too small for dataset", function() {
+    expect(emUtil.find(years, 0.1)).toEqual(-1)
+  });
+
+  it("should return size of array if emissions too large", function() {
+    expect(emUtil.find(years, 4)).toEqual(3)
+  })
 });
