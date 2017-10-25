@@ -1,1 +1,6 @@
 *~
+res/*
+node_modules/*
+*.csv
+*/d3.min.js
+config/*

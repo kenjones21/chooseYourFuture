@@ -1,0 +1,53 @@
+<!doctype html>
+<meta charset="utf-8">
+<html ng-app="MEAN-Template-Angular">
+  <head>
+    <title>Choose Your Future</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="../javascript/d3.min.js"></script>
+    <script type="text/javascript" src="../javascript/app.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <link rel="icon" type="image/ico" href="images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  
+  <body class="page-wrapper">
+    <div class="container-fluid emissions">
+      <div class="row">
+	<div class="col-8">
+	  <svg id="emissionsChart" width="90%"></svg>
+	  <button onclick="paris()">Paris</button>
+	  <button onclick="committed()">Committed</button>
+	  <button onclick="rcp3()">RCP 2.6</button>
+	</div>
+	<div class="col">
+	  <svg id="barChart"></svg>
+	  <div id="stats" style="color:white">
+	    <p id="rainfall">
+	      <span id="fire" class="stat"></span>
+	      increase in area burned in fires in parts of Western US
+	    </p>
+	    
+	    <p>
+	      <span id="heavyRain" class="stat"></span>
+	      increase in heavy rainfall events
+	    </p>
+	    
+	    <p>
+	      <span id="rain" class="stat"></span>
+	      change in rainfall totals in some areas
+	    </p>
+	    
+	    <p>
+	      <span id="corn" class="stat"></span>
+	      reduction in US corn yields
+	    </p>
+	    
+	  </div>
+	</div>
+      </div>
+    </div>
+
+  </body>
+</html>
