@@ -134,8 +134,8 @@ var sumEm = function(years) {
   return sum
 }
 
-var divideEmissions = function(futureData, budgetThresholds) {
   // Divides emissions into n+1 parts, where n is length of budgetThresholds
+var divideEmissions = function(futureData, budgetThresholds) {
   var sum = 0
   var i = 0
   var threshold = budgetThresholds[0]
@@ -161,6 +161,7 @@ var divideEmissions = function(futureData, budgetThresholds) {
   return retarr
 }
 
+// Various functions for converting strings to numbers, used in d3.csv
 function toNum(d){
   d.year = +d.Year
   d.em = (+d.Total) * (44/12000)
@@ -181,6 +182,7 @@ function numSmooth(d) {
   return d
 }
 
+// Translates thresholds from y1 to y2 given years in between
 function thresholdsTranslate(y1, y2, y1Thresholds, years) {
   var thresholds = y1Thresholds.slice() // Copy y1Thresholds
   for (i = 0; i < years.length; i++) {
@@ -196,6 +198,7 @@ function thresholdsTranslate(y1, y2, y1Thresholds, years) {
   return thresholds
 }
 
+// Finds index in exceedanceData immediately at or after emissions
 function find(exceedanceData, emissions) {
   prevDatum = exceedanceData[0]
   if (emissions < prevDatum.em) {
@@ -210,6 +213,8 @@ function find(exceedanceData, emissions) {
   return exceedanceData.length // If it's beyond dataset, return length of dataset
 }
 
+// Estimates probability of exceeding temperature threshold, defined by
+// objects in exceedanceData
 function estimateExceedanceProbability(exceedanceData, emissions){
   if (!exceedanceData) {
     console.log("notta")
@@ -220,6 +225,8 @@ function estimateExceedanceProbability(exceedanceData, emissions){
   return ret.Smooth
 }
 
+// Makes request to server to fill out tempDict, which estimates probability
+// of exceedance for a given temperature based on IPCC scenario database
 function getSmoothedProbs() {
   d3.csv("/api/smoothed_csv", numSmooth, function(error, data) {
     tempDict = {"one_five": [], "two": [], "three": [], "four": []}
@@ -237,6 +244,9 @@ function getSmoothedProbs() {
   })
 }
 
+// Gets stats for a certain temperature. Based on following report: 
+// http://dels.nas.edu/resources/static-assets/materials-based-on-reports/
+// booklets/warming_world_final.pdf
 function getStats(temp) {
   var stats = []
   if (temp < 2) {

@@ -1,4 +1,4 @@
-describe("EmissionsUtility", function() {
+describe("Utility Functions", function() {
   var y1, y2, y3, years, yearsNonFlat
 
   beforeEach(function() {
