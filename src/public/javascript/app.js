@@ -124,7 +124,12 @@ var futureData = function(hist, peak, em0) {
 var sumEm = function(years) {
   sum = 0
   years.forEach(function(year) {
-    sum += year.em
+    if (Array.isArray(year)) {
+      sum += sumEm(year)
+    }
+    else {
+      sum += year.em
+    }
   })
   return sum
 }
@@ -193,12 +198,12 @@ function thresholdsTranslate(y1, y2, y1Thresholds, years) {
 
 function find(exceedanceData, emissions) {
   prevDatum = exceedanceData[0]
-  if (emissions < prevDatum.smooth) {
+  if (emissions < prevDatum.em) {
     return -1 // -1 if emissions are too small for dataset
   }
   for (var i = 0; i < exceedanceData.length; ++i) {
     datum = exceedanceData[i]
-    if (emissions < datum.em && emissions > prevDatum.em) {
+    if (emissions <= datum.em && emissions > prevDatum.em) {
       return i
     }
   }
