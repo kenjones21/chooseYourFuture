@@ -38,5 +38,29 @@ describe("Utility Functions", function() {
 
   it("should return size of array if emissions too large", function() {
     expect(find(years, 4)).toEqual(3)
-  })
+  });
+});
+
+describe("Interpolation", function() {
+  var y1, y2, y3, years, yearsNonFlat
+
+  beforeEach(function() {
+    y1 = {"year": 1, "em": 1}
+    y2 = {"year": 2, "em": 2}
+    y3 = {"year": 3, "em": 3}
+    years = [y1, y2, y3]
+    yearsNonFlat = [[y1, y2], [y3]]
+  });
+  
+  describe("toPeak", function() {
+    var ePrime = 1
+    var peakYear = {"year": 7, "em": 3}
+    it("should be flat if last year's emissions are the same as peak year", function() {
+      var toPeakYears = toPeak(y3, ePrime, peakYear)
+      console.log(toPeakYears)
+      toPeakYears.forEach(function(y) {
+	expect(y.em).toEqual(y3.em)
+      });
+    });
+  });
 });

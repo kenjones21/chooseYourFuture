@@ -2,7 +2,7 @@
   --- INTERPOLATION FUNCTIONS ---
 */
 
-var toPeak = function(lastYear, ePrimeLastYear, peakYear, year0) {
+var toPeak = function(lastYear, ePrimeLastYear, peakYear) {
   toPeakYears = []
   toPeakYears.push(lastYear)
   if (lastYear.em > peakYear.em) {
@@ -17,12 +17,18 @@ var toPeak = function(lastYear, ePrimeLastYear, peakYear, year0) {
   var y = -1
   var em_y = -1
   if (delta_em < edge) {
-    yearFlat = 2 * delta_em / ePrimeLastYear + 2016
-    m = -ePrimeLastYear / (yearFlat - 2016) // m
+    yearFlat = 2 * delta_em / ePrimeLastYear + lastYear.year
+    if (yearFlat == lastYear.year) {
+      console.log("Emissions totally flat")
+      m = 0
+    }
+    else {
+      m = -ePrimeLastYear / (yearFlat - lastYear.year) // m
+    }
     var C = lastYear.em - ePrimeLastYear * lastYear.year + (m * lastYear.year * lastYear.year)/2
     // f((y) = E(2016) +  E'y + my^2/2 - 2016my
     var f = function(y) {
-      return C + ePrimeLastYear * y + m*y*y/2 - 2016 * m * y
+      return C + ePrimeLastYear * y + m*y*y/2 - lastYear.year * m * y
     }
     em_y = f(lastYear.year)
     for (y = lastYear.year + 1; y <= yearFlat; ++y) {
@@ -108,7 +114,7 @@ var peakTo0 = function(peakYear, year0) {
 
 var futureData = function(hist, peak, em0) {
   var finalYear = 2100
-  var histToPeak = toPeak(hist[hist.length - 1], 0.5, peak, em0)
+  var histToPeak = toPeak(hist[hist.length - 1], 0.5, peak)
   var peakToZero = peakTo0(peak, em0)
   var zeroToEnd = []
   for (var y = Math.floor(em0.year); y < finalYear; ++y) {
