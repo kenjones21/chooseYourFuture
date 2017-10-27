@@ -288,6 +288,10 @@ var default_peak = {year: 2050, em: 60}
 var paris_peak = {year: 2030, em: 38.5}
 var RCP26_peak = {year: 2030, em: 38}
 var RCP26_em0 = {year: 2070, em: 0}
+var RCP45_peak = {year: 2049, em: 47}
+var RCP45_em0 = {year: 2100, em: 0}
+var RCP6_peak = {year: 2100, em: 48.8}
+var RCP6_em0 = {year: 2100, em: 0}
 var committed_peak = {year: 2017, em: 36.51}
 var committed_em0 = {year: 2064.5, em: 0}
 var current_policy2030 = {year: 2030, em: 46}
@@ -310,14 +314,15 @@ width = +width.substring(0, width.length - 2)
 console.log(width)
 var barGraphWidth = d3.select("#barChart").style("width")
 barGraphWidth = +barGraphWidth.substring(0, barGraphWidth.length - 2)
-// var width = 800 - margin.left - margin.right
+barGraphWidth = barGraphWidth - barMargin.left - barMargin.right
+console.log("barGraphWidth", barGraphWidth)
 var ratio = 9/16
 var height = width * ratio
 var r = 15
-//    var barGraphWidth = width + margin.left + margin.right - barMargin.left - barMargin.right
 var barGraphHeight = barGraphWidth
 var barHeight = barGraphHeight / 8
 var barSpace = (barGraphHeight - 4 * barHeight) / 4
+var legendRatio = 0.03
 
 var chart = d3.select("#emissionsChart")
     .attr("class", "emissionsChart")
@@ -352,7 +357,10 @@ var area = d3.area()
 
 var colors = ["#fef0d9", "#fdcc8a", "#fc8d59", "#d7301f"]
 var temps = ["one_five", "two", "three", "four"]
-var tempNumbers = ["1.5", "2", "3", "4+"]
+var tempNumbers = ["1.5 (Aspirational Paris Target)",
+		   "2 (Main Paris Target, Dangerous)",
+		   "3 (Catastrophic)",
+		   "4+"]
 
 //          --- CONTROLLER FUNCTIONS ---
 
@@ -371,6 +379,20 @@ var rcp3 = function() {
   peak = Object.assign({}, RCP26_peak)
   em0 = Object.assign({}, RCP26_em0)
   updateChart()
+}
+
+var rcp45 = function() {
+  peak = Object.assign({}, RCP45_peak)
+  em0 = Object.assign({}, RCP45_em0)
+  updateChart()
+  console.log("Budget: ", budget)
+}
+
+var rcp6 = function() {
+  peak = Object.assign({}, RCP6_peak)
+  em0 = Object.assign({}, RCP6_em0)
+  updateChart()
+  console.log("Budget: ", budget)
 }
 
 //               --- CHART FUNCTIONS
@@ -406,6 +428,7 @@ function drawFuture(futureArr) {
 
 function drawLegend() {
   temp = medianB + medianM * budget
+  var legendBoxSize = legendRatio * width
   
   chart.append("text")
     .datum(budget)
@@ -436,17 +459,19 @@ function drawLegend() {
     .enter().append("rect")
     .attr("class", "legend")
     .attr("transform", function(d, i) {
-      return "translate(" + (margin.left * 2 - 40) + "," + (height/4 + i * 50) + ")"
+      return "translate(" + (margin.left - legendBoxSize * 0.5) +
+	"," + (height/4 + i * 2 * legendBoxSize) + ")"
     })
-    .attr("width", 30)
-    .attr("height", 30)
+    .attr("width", legendBoxSize)
+    .attr("height", legendBoxSize)
     .style("fill", function(d) {return d})
 
   chart.selectAll(".legendTemp")
     .data(tempNumbers)
     .enter().append("text")
     .attr("transform", function(d, i) {
-      return "translate(" + (margin.left * 2) + "," + (height/4 + i * 50 + 20) + ")"
+      return "translate(" + (margin.left + legendBoxSize) + "," +
+	(height/4 + (i + 0.3) * 2 * legendBoxSize) + ")"
     })
     .text(function(d) {return d})
     .style("fill", "white") 

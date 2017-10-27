@@ -15,35 +15,51 @@
   <body class="page-wrapper">
     <div class="container-fluid emissions">
       <div class="row">
-	<div class="col-8">
+	<div class="col-md-9">
 	  <svg id="emissionsChart" width="90%"></svg>
-	  <button onclick="paris()">Paris</button>
-	  <button onclick="committed()">Committed</button>
-	  <button onclick="rcp3()">RCP 2.6</button>
+	  <hr>
+	  <table style="width:100%">
+	    <tr>
+	      <th style="text-align:center;width:50%;color:white">Peak Scenarios</th>
+	      <th style="text-align:center;width:50%;color:white">General Scenarios</th>
+	    </tr>
+	    <tr>
+	      <td>
+		<button onclick="paris()">Paris</button>
+	      </td>
+	      <td>
+		<button onclick="committed()">Committed</button>
+		<button onclick="rcp3()">RCP 2.6</button>
+		<button onclick="rcp45()">RCP 4.5</button>
+		<button onclick="rcp6()">RCP 6.0</button>
+	      </td>
+	    </tr>
+	  </table>
 	</div>
-	<div class="col">
-	  <svg id="barChart"></svg>
+	<div class="col-md-3">
+	  <svg id="barChart" width="100%"></svg>
 	  <div id="stats" style="color:white">
-	    <p id="rainfall">
-	      <span id="fire" class="stat"></span>
-	      increase in area burned in fires in parts of Western US
-	    </p>
-	    
-	    <p>
-	      <span id="heavyRain" class="stat"></span>
-	      increase in heavy rainfall events
-	    </p>
-	    
-	    <p>
-	      <span id="rain" class="stat"></span>
-	      change in rainfall totals in some areas
-	    </p>
-	    
-	    <p>
-	      <span id="corn" class="stat"></span>
-	      reduction in US corn yields
-	    </p>
-	    
+	    <table>
+	      <tr id="rainfall">
+		<td id="fire6" class="stat" width="40%"></td>
+		<td width="60%">Increase in area burned in fires in parts of Western US</td>
+	      </tr>
+	      
+	      <tr>
+		<td id="heavyRain" class="stat"></td>
+		<td>Increase in heavy rainfall events</td>
+	      </tr>
+	      
+	      <tr>
+		<td id="rain" class="stat"></td>
+		<td>Change in rainfall totals in some areas</td>
+	      </tr>
+	      
+	      <tr>
+		<td id="corn" class="stat"></td>
+		<td>Reduction in US corn yields</td>
+	      </tr>
+	    </table>
 	  </div>
 	</div>
       </div>
