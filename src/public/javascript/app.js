@@ -461,7 +461,7 @@ function drawLegend() {
     .attr("class", "legend")
     .attr("transform", function(d, i) {
       return "translate(" + (margin.left - legendBoxSize * 0.5) +
-	"," + (height/4 + i * 2 * legendBoxSize) + ")"
+	"," + (margin.top + i * 2 * legendBoxSize) + ")"
     })
     .attr("width", legendBoxSize)
     .attr("height", legendBoxSize)
@@ -472,7 +472,7 @@ function drawLegend() {
     .enter().append("text")
     .attr("transform", function(d, i) {
       return "translate(" + (margin.left + legendBoxSize) + "," +
-	(height/4 + (i + 0.3) * 2 * legendBoxSize) + ")"
+	(margin.top + (i + 0.3) * 2 * legendBoxSize) + ")"
     })
     .text(function(d) {return d})
     .style("fill", "white") 
@@ -672,7 +672,7 @@ function drawBarLines() {
       .attr("x1", x0)
       .attr("y1", 0)
       .attr("x2", x0)
-      .attr("y2", height);
+      .attr("y2", barGraphHeight);
 }
 
 function updateStats() {
