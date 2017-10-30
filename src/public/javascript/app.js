@@ -308,7 +308,7 @@ var medianM = 0.0007436709
 //            --- CHART VARIABLES ---
 
 var margin = {top: 10, right: 20, bottom: 30, left: 40}
-var barMargin = {top: 10, right: 20, bottom: 30, left: 20}
+var barMargin = {top: 10, right: 50, bottom: 30, left: 20}
 var width = d3.select("#emissionsChart").style("width")
 width = +width.substring(0, width.length - 2)
 console.log(width)
@@ -357,10 +357,10 @@ var area = d3.area()
 
 var colors = ["#fef0d9", "#fdcc8a", "#fc8d59", "#d7301f"]
 var temps = ["one_five", "two", "three", "four"]
-var tempNumbers = ["1.5 (Aspirational Paris Target)",
-		   "2 (Main Paris Target, Dangerous)",
-		   "3 (Catastrophic)",
-		   "4+"]
+var tempNumbers = ["1.5 °C (Aspirational Paris Target)",
+		   "2 °C (Main Paris Target, Dangerous)",
+		   "3 °C (Catastrophic)",
+		   "4+ °C "]
 
 //          --- CONTROLLER FUNCTIONS ---
 
@@ -625,6 +625,17 @@ function makeBarChart(emissionsSum) {
       return "translate(0," + translate + ")"
     })
     .style("fill", function(d, i) {return colors[i]})
+    .on("mouseover", function(d, i) {
+      translate = barHeight * i + (1 + i) * barSpace + 3
+      barChart.append("text")
+	.attr("class", "ttip")
+	.attr("transform", "translate(" + (barX(d) + 10) + "," + translate + ")")
+	.text(percentFormat(d))
+	.style("fill", "white")
+    })
+    .on("mouseout", function() {
+      barChart.select(".ttip").remove()
+    })
 }
 
 function updateBarWidth() {
