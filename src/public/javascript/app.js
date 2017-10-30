@@ -305,6 +305,7 @@ var probs = [0, 0, 0, 0]
 var temp = 1
 var medianB = 1.38531
 var medianM = 0.0007436709
+var minEmissions = 203
 
 //            --- CHART VARIABLES ---
 
@@ -610,9 +611,14 @@ function makeChart(histData, futureArr) {
 }
 
 function makeBarChart(emissionsSum) {
+  var emissions = minEmissions
+  if (emissionsSum > minEmissions) {
+    console.log("Emissions is not too small", emissionsSum, minEmissions)
+    var emissions = emissionsSum
+  }
   for (var i = 0; i < temps.length; ++i) {
     t = temps[i]
-    probs[i] = estimateExceedanceProbability(tempDict[t], emissionsSum)
+    probs[i] = estimateExceedanceProbability(tempDict[t], emissions)
   }
   console.log(probs)
   barChart.selectAll(".prob")
@@ -720,6 +726,7 @@ d3.csv("/api/emissions_csv", toNum, function(error, data) {
   console.log("Budget is ", budget)
   updateStats()
   makeChart(histData, futureArr)
+  updateChart()
 })
 
 getSmoothedProbs()
