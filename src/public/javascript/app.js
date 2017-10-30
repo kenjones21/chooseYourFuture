@@ -284,7 +284,8 @@ function getStats(temp) {
 
 var thresholds2011 = [400, 1000, 2400]
 var thresholds2017 = []
-var default_peak = {year: 2050, em: 60}
+var default_peak = {year: 2050, em: 50}
+var default_em0 = {year: 2100, em: 0}
 var paris_peak = {year: 2030, em: 38.5}
 var RCP26_peak = {year: 2030, em: 38}
 var RCP26_em0 = {year: 2070, em: 0}
@@ -296,7 +297,7 @@ var committed_peak = {year: 2017, em: 36.51}
 var committed_em0 = {year: 2064.5, em: 0}
 var current_policy2030 = {year: 2030, em: 46}
 var peak = Object.assign({}, default_peak)
-var em0 = {year: 2080, em: 1}
+var em0 = Object.assign({}, default_em0)
 var histData = []
 var lastYear = {}
 var budget = 0
@@ -359,8 +360,8 @@ var colors = ["#fef0d9", "#fdcc8a", "#fc8d59", "#d7301f"]
 var temps = ["one_five", "two", "three", "four"]
 var tempNumbers = ["1.5 °C (Aspirational Paris Target)",
 		   "2 °C (Main Paris Target, Dangerous)",
-		   "3 °C (Catastrophic)",
-		   "4+ °C "]
+		   "3 °C (Extremely Dangerous)",
+		   "4+ °C (Catastrophic)"]
 
 //          --- CONTROLLER FUNCTIONS ---
 
