@@ -614,7 +614,7 @@ function makeBarChart(emissionsSum) {
   var emissions = minEmissions
   if (emissionsSum > minEmissions) {
     console.log("Emissions is not too small", emissionsSum, minEmissions)
-    var emissions = emissionsSum
+    emissions = emissionsSum
   }
   for (var i = 0; i < temps.length; ++i) {
     t = temps[i]
