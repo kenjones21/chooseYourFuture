@@ -597,7 +597,7 @@ function drawAxes() {
     .attr("y", 6)
     .attr("dy", ".71em")
     .style("text-anchor", "end")
-    .text("Mt CO2/yr")
+    .text("Gt CO2/yr")
 }
 
 function makeChart(histData, futureArr) {
