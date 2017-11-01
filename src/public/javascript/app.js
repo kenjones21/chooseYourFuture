@@ -314,6 +314,7 @@ var margin = {top: 10, right: 20, bottom: 30, left: 40}
 var barMargin = {top: 10, right: 50, bottom: 30, left: 20}
 var width = d3.select("#emissionsChart").style("width")
 width = +width.substring(0, width.length - 2)
+width = width - margin.left - margin.right
 console.log(width)
 var barGraphWidth = d3.select("#barChart").style("width")
 barGraphWidth = +barGraphWidth.substring(0, barGraphWidth.length - 2)
@@ -329,13 +330,13 @@ var legendRatio = 0.03
 
 var chart = d3.select("#emissionsChart")
     .attr("class", "emissionsChart")
-    .attr("width", width + margin.left + margin.right)
+//    .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.bottom + margin.top)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 var barChart = d3.select("#barChart")
     .attr("class", "barChart")
-    .attr("width", barGraphWidth + barMargin.left + barMargin.right)
+//    .attr("width", barGraphWidth + barMargin.left + barMargin.right)
     .attr("height", barGraphHeight + barMargin.top + barMargin.bottom)
     .append("g")
     .attr("transform", "translate(" + barMargin.left + "," + barMargin.top + ")");
@@ -412,6 +413,46 @@ var round = function(num, index) {
   // round(5839.4, 2) returns 5800
   roundNum = Math.pow(10, index)
   return Math.round(num/roundNum) * roundNum
+}
+
+function updateDimensions() {
+  width = d3.select("#emissionsChart").style("width")
+  width = +width.substring(0, width.length - 2)
+  width = width - margin.left - margin.right
+  console.log("resized width: ", width)
+  barGraphWidth = d3.select("#barChart").style("width")
+  barGraphWidth = +barGraphWidth.substring(0, barGraphWidth.length - 2)
+  barGraphWidth = barGraphWidth - barMargin.left - barMargin.right
+  console.log("resize barGraphWidth: ", barGraphWidth)
+  height = width * ratio
+  barGraphHeight = barGraphWidth
+  barHeight = barGraphHeight / 8
+  barSpace = (barGraphHeight - 4 * barHeight) / 4
+
+  chart = d3.select("#emissionsChart")
+    .attr("class", "emissionsChart")
+    .attr("height", height + margin.bottom + margin.top)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  barChart = d3.select("#barChart")
+    .attr("class", "barChart")
+    .attr("height", barGraphHeight + barMargin.top + barMargin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + barMargin.left + "," + barMargin.top + ")");
+
+  x = d3.scaleLinear()
+    .domain([1955, 2100])
+    .range([0, width])
+
+  y = d3.scaleLinear()
+    .domain([0, 60])
+    .range([height, 0])
+
+  barX = d3.scaleLinear()
+    .range([0, barGraphWidth])
+    .domain([0, 1])
+  
+  area.y0(height)
 }
 
 function drawHist(hist) {
@@ -606,6 +647,14 @@ function drawAxes() {
     .text("Gt CO2/yr")
 }
 
+function clearChart() {
+  chart.selectAll("*").remove()
+}
+
+function clearBarChart() {
+  barChart.selectAll("*").remove()
+}
+
 function makeChart(histData, futureArr) {
   drawHist(histData)
   drawFuture(futureArr)
@@ -649,6 +698,22 @@ function makeBarChart(emissionsSum) {
     .on("mouseout", function() {
       barChart.select(".ttip").remove()
     })
+}
+
+function remakeCharts() {
+  clearChart()
+  clearBarChart()
+  updateDimensions()
+  drawAxes()
+  drawBarAxis()
+  makeChart(histData, futureArr)
+  makeBarChart(budget)
+}
+
+function remakeBarChart() {
+  clearBarChart()
+  drawBarAxis()
+  makeBarChart(budget)
 }
 
 function updateBarWidth() {
@@ -737,4 +802,6 @@ d3.csv("/api/emissions_csv", toNum, function(error, data) {
 
 getSmoothedProbs()
 
-
+$(window).resize(function() {
+  remakeCharts()
+});
