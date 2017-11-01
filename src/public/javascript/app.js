@@ -287,6 +287,7 @@ var thresholds2017 = []
 var default_peak = {year: 2050, em: 50}
 var default_em0 = {year: 2100, em: 0}
 var paris_peak = {year: 2030, em: 38.5}
+var current_policy_peak = {year: 2030, em: 43}
 var RCP26_peak = {year: 2030, em: 38}
 var RCP26_em0 = {year: 2070, em: 0}
 var RCP45_peak = {year: 2049, em: 47}
@@ -368,6 +369,11 @@ var tempNumbers = ["1.5 °C (Aspirational Paris Target)",
 
 var paris = function() {
   peak = Object.assign({}, paris_peak)
+  updateChart()
+}
+
+var current = function() {
+  peak = Object.assign({}, current_policy_peak)
   updateChart()
 }
 
