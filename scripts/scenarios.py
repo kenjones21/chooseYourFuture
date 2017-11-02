@@ -318,6 +318,33 @@ def squares(params):
     paramDict = {"b": params[0], "c": params[1]}
     gaussX, gaussY = gaussInt(paramDict, min(sums) - pad, max(sums) + pad)
     return squares1(gaussX, gaussY, sums, probs)
+
+def makeChartWithFit(temp, outFileName, params, i):
+    excProb = exceedanceProbabilities()
+    e = emissionsSums(2017)
+    f = exceedance2100(excProb, temp)
+    merged = mergeExcSums(f, e)
+    sums, probs = getXY(merged)
+    sums, probs = sortXY(sums, probs)
+    m = np.linspace(min(sums) - 100, max(sums) + 100, 100)
+    y = []
+    minm = min(m)
+    prevN = m[0]
+    theSum = integrate(gaussian, params["b"] - 5 * params["c"], prevN, 0.1, params)
+    for n in m:
+        theSum += integrate(gaussian, prevN, n, 0.1, params)
+        prevN = n
+        y.append(theSum)
+
+    ax = plt.subplot(2, 2, i+1)
+    ax.set_xlabel('Cumulative Emissions from 2017')
+    ax.set_ylabel('Probability of Exceeding ' + temp + " degrees C")
+    plt.scatter(sums, probs, s=10)
+    plt.plot(m, y, color="green")
+    lowess = sm.nonparametric.lowess(probs, sums, frac=0.20)
+    lowess2 = list(map(list, zip(*lowess)))
+    plt.plot(lowess2[0], lowess2[1], color="red")
+    plt.title("Probability of Exceedance, " + temp + " degrees C")
         
 readFile("../res/ar5_scenarios.csv")
 # med2100 = median2100()
@@ -337,7 +364,7 @@ readFile("../res/ar5_scenarios.csv")
 #     lowess = sm.nonparametric.lowess(probs, sums, frac=0.30)
 #     smoothedExcProbs.append(lowess)
 # export("../res/budget.csv", sums, smoothedExcProbs
-"""
+
 # Params:
 param1_5 = {"b": 97, "c": 890}
 # 1.5: 97, 890
@@ -348,8 +375,9 @@ param3 = {"b": 3035, "c": 1355}
 param4 = {"b": 5114, "c": 2027}
 # 4.0: 5114, 2027
 temps = ["","one_five", "two", "three", "four"]
+temps2 = ["1.5", "2.0", "3.0", "4.0"]
 allparams = [param1_5, param2, param3, param4]
-"""
+
 temp = "2.0"
 excProb = exceedanceProbabilities()
 d = maxExceedanceProbabilities(excProb, temp)
@@ -405,23 +433,15 @@ fig.colorbar(im)
 ax.axis('tight')
 plt.show()
 print("Min b, c", b, c)
-
-params = {"b": optX[0], "c": optX[1]}
-m = np.linspace(min(sums) - 100, max(sums) + 100, 100)
-y = []
-minm = min(m)
-prevN = m[0]
-theSum = integrate(gaussian, params["b"] - 5 * params["c"], prevN, 0.1, params)
-for n in m:
-    theSum += integrate(gaussian, prevN, n, 0.1, params)
-    prevN = n
-    y.append(theSum)
-
-plt.scatter(sums, probs, s=10)
-plt.plot(m, y, color="red")
-plt.title("Probability of Exceedance, " + temp + " degrees C")
-plt.show()
 """
+plt.figure(figsize=(16,12))
+for i in range(0, 4):
+    t = temps2[i]
+    params = allparams[i]
+    print(t, params, i)
+    makeChartWithFit(t, "fuck.csv", params, i)
+plt.savefig("fits-lowess.png")
+
 # TESTS
 # testYear = data[76]
 # print(emissionsSum(testYear, 2009) - emissionsSum(testYear, 2010))

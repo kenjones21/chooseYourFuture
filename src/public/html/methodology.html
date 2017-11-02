@@ -1,37 +1,59 @@
-<p>
-  Budgets in this document are based primarily on the budgets laid out in
-  <a href="http://www.ipcc.ch/pdf/assessment-report/ar5/syr/SYR_AR5_FINAL_full_wcover.pdf">
-    Table 2.2 of the AR5 Synthesis report.
-  </a>
-  This table was used to create the divisions in the emissions pathway chart as well as the
-  temperature corresponding to a 33% chance of exceedance.
-</p>
-<p>
-  However, it was not possible to use this table to inform probabilities of exceedance for
-  intermediate levels of emissions. To create this, the
-  <a href="https://tntcat.iiasa.ac.at/AR5DB/dsd?Action=htmlpage&page=about">
-    AR5 scenario database
-  </a>
-  was used. In the database, probabilities of exceedance are given for 1.5, 2, 3, and 4
-  degrees Celsius across model runs. It is possible to compare cumulative emissions to
-  2100 and probabilities of exceedance.
-</p>
-<p>
-  INSERT CHART OF RAW DATA WITH NO FIT HERE
-</p>
-<p>
-  Initially, a smooth fit across the four temperatures was attempted, using Loess regression.
-  However, because the data includes a wide range of scenarios at certain stabilization levels,
-  the smoothing behavior tended to be strange (and arguably unphysical) in certain areas.
-</p>
-<p>
-  INESRT CHART OF LOESS FITS HERE
-</p>
-<p>
-  To rectify this, an assumption was made that the probability distribution function for the amount
-  of cumulative emissions necessary to exceed a certain temperature threshold was normally
-  distributed, so the data as given could be fit to the integral of a gaussian.
-</p>
-<p>
-  INSERT CHART OF GAUSSIAN FITS HERE
-</p>
+<!doctype html>
+<meta charset="utf-8">
+<html>
+  <head>
+    <title>Choose Your Future</title>
+    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css">
+    <link rel="icon" type="image/ico" href="images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+
+  <div class="container">
+    <h1>Methodology</h1>
+    <p>
+      Carbon budgets in this document are based primarily on the budgets laid out in
+      <a href="http://www.ipcc.ch/pdf/assessment-report/ar5/syr/SYR_AR5_FINAL_full_wcover.pdf"
+	 target="_blank">
+	Table 2.2 of the AR5 Synthesis report.
+      </a>
+      This table was used to create the divisions in the emissions pathway chart as well as the
+      temperature corresponding to a 33% chance of exceedance.
+    </p>
+    <p>
+      However, it was not possible to use this table to inform probabilities of exceedance for
+      intermediate levels of emissions. To create this, the
+      <a href="https://tntcat.iiasa.ac.at/AR5DB/dsd?Action=htmlpage&page=about" target="_blank">
+	AR5 scenario database
+      </a>
+      was used. In the database, probabilities of exceedance are given for 1.5, 2, 3, and 4
+      degrees Celsius across model runs. It is possible to compare cumulative carbon dioxide
+      emissions to 2100 and probabilities of exceedance at the same date. Thus, the budgets
+      that one might make from this analysis would be
+      <a href="https://www.cicero.uio.no/no/posts/klima/how-much-carbon-dioxide-can-we-emit"
+	 target="_blank">
+	Threshold Exceedance Budgets,
+      </a>
+      as opposed to Threshold Avoidance Budgets, which would be smaller. 
+    </p>
+    <img src="/images/nofits.png" class="img-fluid">
+    <p>
+      Initially, a smooth fit across the four temperatures was attempted, using LOWESS regression.
+      However, because the data includes a wide range of scenarios at certain stabilization levels,
+      the smoothing behavior tended to be strange (and arguably unphysical) in these areas.
+    </p>
+    <img src="/images/lowess.png" class="img-fluid">
+    <p>
+      To rectify this, an assumption was made that the probability distribution function for
+      the amount
+      of cumulative emissions necessary to exceed a certain temperature threshold was normally
+      distributed, so the data as given could be fit to the integral of a gaussian.
+    </p>
+    <img src="/images/fits.png" class="img-fluid">
+    <p>
+      The two fits generally agree with one another pretty well. Perhaps the most important
+      discrepancy is at low levels of exceedance of 4 degrees Celsius, where the Gaussian fit
+      is somewhat larger than the LOWESS fit.
+    </p>
+    <img src="/images/fits-lowess.png" class="img-fluid">
+  </div>
+</html>
