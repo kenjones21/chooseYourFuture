@@ -16,4 +16,12 @@ app.get('/methodology', function(req, res) {
   res.sendFile(path.resolve('./src/public/html/methodology.html'))
 });
 
+app.get('/about', function(req, res) {
+  res.sendFile(path.resolve('./src/public/html/about.html'))
+});
+
+app.get('/contact', function(req, res) {
+  res.sendFile(path.resolve('./src/public/html/contact.html'))
+});
+
 module.exports = router;

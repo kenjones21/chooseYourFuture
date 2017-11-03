@@ -17,7 +17,8 @@ module.exports = function(grunt) {
 
         },
         files: {
-          'src/public/stylesheets/style.css': 'src/stylus/main.styl'
+          'src/public/stylesheets/style.css': 'src/stylus/main.styl',
+	  'src/public/stylesheets/other.css': 'src/stylus/other.styl'
         }
       }
     },
