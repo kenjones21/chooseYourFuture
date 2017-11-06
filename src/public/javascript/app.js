@@ -327,6 +327,7 @@ var barGraphHeight = barGraphWidth
 var barHeight = barGraphHeight / 8
 var barSpace = (barGraphHeight - 4 * barHeight) / 4
 var legendRatio = 0.03
+var widthLimit = 500
 
 var chart = d3.select("#emissionsChart")
     .attr("class", "emissionsChart")
@@ -419,11 +420,9 @@ function updateDimensions() {
   width = d3.select("#emissionsChart").style("width")
   width = +width.substring(0, width.length - 2)
   width = width - margin.left - margin.right
-  console.log("resized width: ", width)
   barGraphWidth = d3.select("#barChart").style("width")
   barGraphWidth = +barGraphWidth.substring(0, barGraphWidth.length - 2)
   barGraphWidth = barGraphWidth - barMargin.left - barMargin.right
-  console.log("resize barGraphWidth: ", barGraphWidth)
   height = width * ratio
   barGraphHeight = barGraphWidth
   barHeight = barGraphHeight / 8
@@ -520,10 +519,12 @@ function drawLegend() {
     .enter().append("text")
     .attr("transform", function(d, i) {
       return "translate(" + (margin.left + legendBoxSize) + "," +
-	(margin.top + (i + 0.3) * 2 * legendBoxSize) + ")"
+	(margin.top + (i + 0.35) * 2 * legendBoxSize) + ")"
     })
+    .attr("class", "legendTemp")
     .text(function(d) {return d})
-    .style("fill", "white") 
+    .style("fill", "white")
+    .style("font-size", width/50 + "px")
 }
 
 function updateLegend() {
@@ -648,6 +649,7 @@ function drawAxes() {
 }
 
 function clearChart() {
+  chart = d3.select("#emissionsChart")
   chart.selectAll("*").remove()
 }
 
@@ -668,7 +670,6 @@ function makeChart(histData, futureArr) {
 function makeBarChart(emissionsSum) {
   var emissions = minEmissions
   if (emissionsSum > minEmissions) {
-    console.log("Emissions is not too small", emissionsSum, minEmissions)
     emissions = emissionsSum
   }
   for (var i = 0; i < temps.length; ++i) {
