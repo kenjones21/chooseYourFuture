@@ -64,7 +64,7 @@
     <figure>
       <img src="/images/fits-lowess.png" class="img-fluid">
       <figcaption style="text-align:center">
-	A comparison of the two fits. 
+	A comparison of the two fits. The LOWESS fit is in red, the gaussian in green.
       </figcaption>
     </figure>
 
@@ -72,8 +72,52 @@
     <a href="http://dels.nas.edu/resources/static-assets/materials-based-on-reports/booklets/warming_world_final.pdf"
        target="_blank">
       report</a>
-    based on another report from the National Resource Council. Beyond the regimes specified
-    in the report, the stat is specified as unknown. 
+    based on another report from the National Research Council. Beyond the regimes specified
+    in the report, the stat is specified as unknown. The temperature used to generate the stats
+    is the temperature corresponding to a 33% probability of exceedance. An alternative might
+    have been to pick the median temperature, but the 33% temperature was chosen to be more
+    representative of the damages one might expect, given that the second derivative of most
+    damage functions with respect to temperature is positive for temperatures less than six
+    degrees, and for some damage functions (DICE), every temperature.
+    For instance, if one considers a damage function of the
+    form given by
+    <a href="https://dash.harvard.edu/bitstream/handle/1/11315435/GHG_Targets_Insurance.pdf?sequence=3"
+       target="_blank">
+      Weitzman (2010)</a>
+    and a normally distributed PDF, the temperature representing the average damage is actually
+    a little over a tenth of a degree higher than the mean temperature increase.
+
+    <figure>
+      <img src="/images/dist.png" class="img-fluid mx-auto d-block">
+      <figcaption style="text-align:center">
+	A normal temperature distribution overlaid with a damage function. 
+      </figcaption>
+    </figure>
+
+    <p>
+      More qualitatively, it's arguably more important to communicate tail risks than
+      the median case. The 33% chance of exceedance was chosen specifically because it
+      is listed concretely in the AR5 Synthesis Report, and thus comes from a more authoritative
+      source than the analysis done specifically for this interactive.
+    </p>
+
+    <p>
+      The 2030 scenarios come from <a href="http://climateactiontracker.org/global.html">
+	Climate Action Tracker</a>, corrected to go from CO2e to CO2, and
+      <a href="http://science.sciencemag.org/content/early/2015/11/24/science.aad5761.full"
+	 target="_blank">
+	Fawcett et. al.
+      </a> The general scenarios correspond to the RCP scenarios (2.6, 4.5, and 6 for low,
+      medium, and high respectively), but only insofar as the budget to 2100 for carbon
+      dioxide is the same; the emission pathway shown differs from the RCP scenarios,
+      particularly for the medium and high scenarios. The committed general scenario
+      corresponds to existing carbon dioxide commitments from existing infrastructure,
+      as <a href="https://www.sei-international.org/publications?pid=2829"
+	    target="_blank"> documented</a>
+      by Peter Erickson and Kevin Tempest. Historical data comes from the
+      <a href="http://www.globalcarbonproject.org/carbonbudget/16/data.htm">
+	Global Carbon Project.
+      </a>
 
     <hr class="footer-hr">
     <div class="footer">

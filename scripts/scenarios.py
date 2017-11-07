@@ -345,6 +345,21 @@ def makeChartWithFit(temp, outFileName, params, i):
     lowess2 = list(map(list, zip(*lowess)))
     plt.plot(lowess2[0], lowess2[1], color="red")
     plt.title("Probability of Exceedance, " + temp + " degrees C")
+
+def damage1(x):
+    return 1 - 1/(1+(x/18.8)**2)
+
+def gd1(x, params):
+    return damage1(x) * gaussian(x, params)
+
+def damage2(x):
+    return 1 - 1/(1+(x/20.46)**2 + (x/6.081)**6.754)
+
+def gd2(x, params):
+    return damage2(x) * gaussian(x, params)
+
+def test(x, params):
+    return gaussian(x, params) * 0.01
         
 readFile("../res/ar5_scenarios.csv")
 # med2100 = median2100()
@@ -433,7 +448,7 @@ fig.colorbar(im)
 ax.axis('tight')
 plt.show()
 print("Min b, c", b, c)
-"""
+
 plt.figure(figsize=(16,12))
 for i in range(0, 4):
     t = temps2[i]
@@ -441,6 +456,29 @@ for i in range(0, 4):
     print(t, params, i)
     makeChartWithFit(t, "fuck.csv", params, i)
 plt.savefig("fits-lowess.png")
+"""
+params1 = {"b": 2, "c": 0.2}
+params2 = {"b": 2, "c": 0.5}
+x = np.linspace(0, 4, 1000)
+print(integrate(gd2, 0, 10, 0.01, params2))
+print(damage2(2.1))
+y1 = []
+y2 = []
+for xi in x:
+    y1.append(gaussian(xi, params2))
+    y2.append(damage2(xi))
+fig, ax1 = plt.subplots()
+ax1.plot(x, y1, 'b', label="Temperature Distribution")
+ax2 = ax1.twinx()
+ax2.plot(x, y2, 'r', label="Climate Damages, % GDP")
+
+ax1.tick_params('y', colors='b')
+ax2.tick_params('y', colors='r')
+ax1.legend(loc="upper left")
+ax2.legend(loc="upper right")
+plt.title("Temperature Distribution and Damage Functions")
+
+#plt.show()
 
 # TESTS
 # testYear = data[76]
