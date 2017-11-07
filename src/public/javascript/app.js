@@ -254,10 +254,11 @@ function getSmoothedProbs() {
 // http://dels.nas.edu/resources/static-assets/materials-based-on-reports/
 // booklets/warming_world_final.pdf
 function getStats(temp) {
+  var t = temp - 1
   var stats = []
   if (temp < 2) {
-    var fireMin = temp * 2
-    var fireMax = temp * 4
+    var fireMin = t * 2
+    var fireMax = t * 4
     var fire = {"name": "fire", "status": "known", "min": fireMin, "max": fireMax}
     stats.push(fire)
   }
@@ -266,11 +267,11 @@ function getStats(temp) {
   }
   if (temp < 4) {
     stats.push({"name": "heavyRain", "status": "known",
-		"min": temp * 0.03, "max": temp * 0.1})
+		"min": t * 0.03, "max": t * 0.1})
     stats.push({"name": "rain", "status": "known",
-		"min": temp * 0.05, "max": temp * 0.1})
+		"min": t * 0.05, "max": t * 0.1})
     stats.push({"name": "corn", "status": "known",
-		"min": temp * 0.05, "max": temp * 0.15})
+		"min": t * 0.05, "max": t * 0.15})
   }
   else {
     stats.push({"name": "heavyRain", "status": "unknown"})
