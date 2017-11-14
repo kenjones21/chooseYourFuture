@@ -10,7 +10,7 @@ var multiparty = require('multiparty');
 // GET /api/user return all users
 router.get('/emissions_csv', function(req, res, next) {
     console.log("Emissions csv request")
-    res.sendFile("./Carbon_Budget.csv", {root: "."})
+    res.sendFile("./emissions.csv", {root: "."})
     console.log("Sent file")
 });
 

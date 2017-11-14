@@ -784,24 +784,24 @@ function updateChart() {
   updateEm0()
 }
 
-drawAxes()
-drawBarAxis()
-d3.csv("/api/emissions_csv", toNum, function(error, data) {
-  updateDimensions()
-  console.log(data)
-  histData = data
-  lastYear = histData[histData.length - 1]
-  var future = futureData(histData, peak, em0)
-  thresholds2017 = thresholdsTranslate(2011, 2017, thresholds2011, data)
-  console.log(thresholds2017)
-  var futureArr = divideEmissions(future, thresholds2017)
-  future = [].concat.apply([], futureArr); // Flatten array
-  budget = sumEm(future)
-  console.log("Budget is ", budget)
-  updateStats()
-  makeChart(histData, futureArr)
-  updateChart()
-})
+function getEmissions() {
+  d3.csv("/api/emissions_csv", toNum, function(error, data) {
+    updateDimensions()
+    console.log(data)
+    histData = data
+    lastYear = histData[histData.length - 1]
+    var future = futureData(histData, peak, em0)
+    thresholds2017 = thresholdsTranslate(2011, 2017, thresholds2011, data)
+    console.log(thresholds2017)
+    var futureArr = divideEmissions(future, thresholds2017)
+    future = [].concat.apply([], futureArr); // Flatten array
+    budget = sumEm(future)
+    console.log("Budget is ", budget)
+    updateStats()
+    makeChart(histData, futureArr)
+    updateChart()
+  })
+}
 
 getSmoothedProbs()
 
@@ -810,5 +810,9 @@ $(window).resize(function() {
 });
 
 $( document ).ready(function() {
-  console.log("hi")
+  updateDimensions()
+  drawAxes()
+  drawBarAxis()
+  getEmissions()
+  console.log("y")
 })
