@@ -3,7 +3,7 @@
 // =============================================================================
 var router = require('express').Router();
 var multiparty = require('multiparty');
-var config = require('../../../config/admin.js');
+//var config = require('../../../config/admin.js');
 
 // Import all models
 

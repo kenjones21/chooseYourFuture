@@ -41,8 +41,8 @@ app.use(methodOverride());
 // =====================================================
 // DATABASE
 // =====================================================
-var dbConfig = require("../../config/db");
-mongoose.connect(dbConfig.url);
+//var dbConfig = require("../../config/db");
+//mongoose.connect(dbConfig.url);
 
 // ====================================================
 // ROUTES

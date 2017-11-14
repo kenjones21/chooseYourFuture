@@ -245,7 +245,6 @@ function getSmoothedProbs() {
 	}
       }
     }
-    console.log(budget)
     makeBarChart(budget)
   })
 }
@@ -314,6 +313,7 @@ var minEmissions = 203
 var margin = {top: 10, right: 20, bottom: 30, left: 40}
 var barMargin = {top: 10, right: 50, bottom: 30, left: 20}
 var width = d3.select("#emissionsChart").style("width")
+console.log("Width before conversion: ", width)
 width = +width.substring(0, width.length - 2)
 width = width - margin.left - margin.right
 console.log(width)
@@ -787,6 +787,7 @@ function updateChart() {
 drawAxes()
 drawBarAxis()
 d3.csv("/api/emissions_csv", toNum, function(error, data) {
+  updateDimensions()
   console.log(data)
   histData = data
   lastYear = histData[histData.length - 1]
@@ -807,3 +808,7 @@ getSmoothedProbs()
 $(window).resize(function() {
   remakeCharts()
 });
+
+$( document ).ready(function() {
+  console.log("hi")
+})

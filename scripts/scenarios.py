@@ -3,8 +3,8 @@
 import csv
 import matplotlib.pyplot as plt
 import numpy as np
-import statsmodels.api as sm
-import scipy.optimize as opt
+#import statsmodels.api as sm
+#Import scipy.optimize as opt
 import math
 
 data = []
@@ -316,7 +316,7 @@ def squares(params):
     # Assume sums, probs are already defined
     pad = 100
     paramDict = {"b": params[0], "c": params[1]}
-    gaussX, gaussY = gaussInt(paramDict, min(sums) - pad, max(sums) + pad)
+    gaussX, gaussY = gaussInt(paramDict, - pad, 5000 + pad)
     return squares1(gaussX, gaussY, sums, probs)
 
 def makeChartWithFit(temp, outFileName, params, i):
@@ -361,7 +361,7 @@ def gd2(x, params):
 def test(x, params):
     return gaussian(x, params) * 0.01
         
-readFile("../res/ar5_scenarios.csv")
+# readFile("../res/ar5_scenarios.csv")
 # med2100 = median2100()
 # temps = ["1.5", "2.0", "3.0", "4.0"]
 # columnNames = ["one_five", "two", "three", "four"]
@@ -392,7 +392,7 @@ param4 = {"b": 5114, "c": 2027}
 temps = ["","one_five", "two", "three", "four"]
 temps2 = ["1.5", "2.0", "3.0", "4.0"]
 allparams = [param1_5, param2, param3, param4]
-
+"""
 temp = "2.0"
 excProb = exceedanceProbabilities()
 d = maxExceedanceProbabilities(excProb, temp)
@@ -412,10 +412,11 @@ for i in range(0, 4):
     temp = temps[i]
     param = allparams[i]
     pad = 100
-    gaussX, gaussY = gaussInt(param, min(sums) - pad, max(sums) + pad)
+    gaussX, gaussY = gaussInt(param, 0, 6000)
     print(len(gaussX), len(gaussY))
     yFuns.append(gaussY)
 export("../res/smoothed.csv", gaussX, yFuns, temps)
+"""
 barr = np.linspace(800, 1600, 40)
 carr = np.linspace(900, 1100, 40)
 #paramStart = [4000, 1200]
