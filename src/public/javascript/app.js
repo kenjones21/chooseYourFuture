@@ -803,8 +803,6 @@ function getEmissions() {
   })
 }
 
-getSmoothedProbs()
-
 $(window).resize(function() {
   remakeCharts()
 });
@@ -814,5 +812,6 @@ $( document ).ready(function() {
   drawAxes()
   drawBarAxis()
   getEmissions()
+  getSmoothedProbs()
   console.log("y")
 })
